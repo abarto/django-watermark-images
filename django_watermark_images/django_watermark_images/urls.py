@@ -16,6 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from items.views import text_overlay, watermark, steganography
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^text_overlay', text_overlay, name='text_overlay'),
+    url(r'^watermark', watermark, name='watermark'),
+    url(r'^steganography', steganography, name='steganography')
 ]
