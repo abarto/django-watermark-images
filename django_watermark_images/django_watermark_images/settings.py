@@ -134,3 +134,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 WATERMARK_IMAGE = os.path.join(BASE_DIR, 'assets/img/Coat_of_arms_of_Ireland.png')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
+    }
+}
