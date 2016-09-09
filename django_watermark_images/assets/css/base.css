@@ -1,0 +1,10 @@
+body {
+    font-family: sans-serif;
+}
+
+.dwi-page-header {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid lightgrey;
+}

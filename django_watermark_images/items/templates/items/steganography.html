@@ -1,3 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block steganography_nb_class %}active{% endblock %}
-{% block content %}<h1>Steganography</h1>{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><div class="dwi-page-header">Steganography</div></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            {% crispy form %}
+        </div>
+    </div>
+</div>
+{% endblock %}
