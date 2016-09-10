@@ -8,3 +8,15 @@ body {
     padding-bottom: 5px;
     border-bottom: 2px solid lightgrey;
 }
+
+.embedded-text {
+    margin-top: 10px;
+}
+
+.embedded-text-label {
+    font-weight: bold;
+}
+
+.embedded-text-value {
+    font-style: italic;
+}
