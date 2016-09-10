@@ -7,21 +7,19 @@
         <div class="col-lg-12"><div class="dwi-page-header">Watermark Result</div></div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Source Image</div>
                 <div class="panel-body">
-                    <img class="img-responsive" src="{% static 'img/missing_image.png' %}"/>
+                    <img class="img-responsive" src="{{ source_image_src }}"/>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Result</div>
                 <div class="panel-body">
-                    <img class="img-responsive" src="{% static 'img/missing_image.png' %}"/>
+                    <img class="img-responsive" src="{{ result_image_src }}"/>
                 </div>
             </div>
         </div>
