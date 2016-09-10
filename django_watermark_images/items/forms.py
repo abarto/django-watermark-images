@@ -31,13 +31,13 @@ class WatermarkForm(forms.Form):
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-10'
         self.helper.layout = Layout(
-            'watermark_image',
             'image',
+            'watermark_image',
             Submit('submit', 'Submit', css_class='btn-default pull-right')
         )
 
-    watermark_image = forms.ImageField(label='Watermark Image', required=True)
     image = forms.ImageField(label='Source Image', required=True)
+    watermark_image = forms.ImageField(label='Watermark Image', required=True)
 
 
 class SteganographyForm(forms.Form):

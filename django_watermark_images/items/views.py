@@ -96,11 +96,31 @@ text_overlay_result = TextOverlayResult.as_view()
 class Watermark(FormView):
     template_name = 'items/watermark.html'
     form_class = WatermarkForm
+
+
+    def form_valid(self, form):
+        image = Image.open(form.cleaned_data['image'])
+        watermark_image = Image.open(form.cleaned_data['watermark_image'])
+
+        result_image = add_watermark(image, watermark_image)
+
+        result_id = _create_result_id()
+        _save_source_image(image, result_id)
+        _save_result_image(result_image, result_id)
+
+        return HttpResponseRedirect(reverse_lazy('watermark_result', kwargs={'result_id': result_id}))
 watermark = Watermark.as_view()
 
 
 class WatermarkResult(TemplateView):
     template_name = 'items/watermark_result.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        result_id = kwargs.get('result_id', 'unknown')
+        context_data['source_image_src'] = reverse_lazy('cached_image', kwargs={'key': _get_source_image_key(result_id)})
+        context_data['result_image_src'] = reverse_lazy('cached_image', kwargs={'key': _get_result_image_key(result_id)})
+        return context_data
 watermark_result = WatermarkResult.as_view()
 
 
