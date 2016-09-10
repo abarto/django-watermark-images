@@ -20,3 +20,15 @@ body {
 .embedded-text-value {
     font-style: italic;
 }
+
+.item-label {
+    font-weight: bold;
+}
+
+.item-row {
+    margin-bottom: 10px;
+}
+
+.item-image {
+    border: dashed 1px gray;
+}

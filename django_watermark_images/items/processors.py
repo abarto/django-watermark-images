@@ -4,6 +4,7 @@ from io import BytesIO
 from pickle import dump, load, UnpicklingError
 
 from django.conf import settings
+from imagekit import ImageSpec, register
 from PIL import Image, ImageDraw, ImageFont, ImageMath
 
 
@@ -72,20 +73,42 @@ def lsb_decode(image):
         return ''
 
 
-class TextOverlay(object):
+class TextOverlayProcessor(object):
     font = ImageFont.truetype('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', 36)
 
     def process(self, image):
         return add_text_overlay(image, self.font, 'django-watermark-images')
 
 
-class Watermark(object):
+class WatermarkProcessor(object):
     watermark = Image.open(settings.WATERMARK_IMAGE)
 
     def process(self, image):
         return add_watermark(image, self.watermark)
 
 
-class HiddenWatermark(object):
+class HiddenWatermarkProcessor(object):
     def process(self, image):
         return lsb_encode('django-watermark-images', image)
+
+
+class TextOverlay(ImageSpec):
+    processors = [TextOverlayProcessor()]
+    format = 'JPEG'
+    options = {'quality': 75}
+
+
+class Watermark(ImageSpec):
+    processors = [WatermarkProcessor()]
+    format = 'JPEG'
+    options = {'quality': 75}
+
+
+class HiddenWatermark(ImageSpec):
+    processors = [HiddenWatermarkProcessor()]
+    format = 'PNG'
+
+
+register.generator('items:text-overlay', TextOverlay)
+register.generator('items:watermark', Watermark)
+register.generator('items:hidden-watermark', HiddenWatermark)

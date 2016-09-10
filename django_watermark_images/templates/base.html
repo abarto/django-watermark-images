@@ -28,9 +28,13 @@
             <div class="container-fluid">
                 <div class="navbar-header"><a class="navbar-brand" href="#">django-watermark-images</a></div>
                 <ul class="nav navbar-nav">
-                    <li class="{% block text_overlay_nb_class %}{% endblock %}"><a href="{% url 'text_overlay' %}">Text Overlay</a></li>
+                    <li class="{% block text_overlay_nb_class %}{% endblock %}"><a href="{% url 'text-overlay' %}">Text Overlay</a></li>
                     <li class="{% block watermark_nb_class %}{% endblock %}"><a href="{% url 'watermark' %}">Watermark</a></li>
                     <li class="{% block steganography_nb_class %}{% endblock %}"><a href="{% url 'steganography' %}">Steganography</a></li>
+                    <li class="{% block items_nb_class %}{% endblock %}"><a href="{% url 'item-create' %}">Items</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 </ul>
             </div>
         </nav>

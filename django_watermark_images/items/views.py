@@ -8,11 +8,14 @@ from django.core.cache import cache
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView, View
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
 from magic import Magic
 from PIL import Image, ImageFont
 
-from .forms import TextOverlayForm, WatermarkForm, SteganographyForm
+from .forms import TextOverlayForm, WatermarkForm, SteganographyForm, ItemForm
+from .models import Item
 from .processors import add_text_overlay, add_watermark, lsb_encode, lsb_decode
 
 
@@ -81,7 +84,7 @@ class TextOverlay(FormView):
         _save_source_image(image, result_id)
         _save_result_image(result_image, result_id)
 
-        return HttpResponseRedirect(reverse_lazy('text_overlay_result', kwargs={'result_id': result_id}))
+        return HttpResponseRedirect(reverse_lazy('text-overlay-result', kwargs={'result_id': result_id}))
 text_overlay = TextOverlay.as_view()
 
 
@@ -91,9 +94,9 @@ class TextOverlayResult(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         result_id = kwargs.get('result_id', 'unknown')
-        context_data['source_image_src'] = reverse_lazy('cached_image',
+        context_data['source_image_src'] = reverse_lazy('cached-image',
                                                         kwargs={'key': _get_source_image_key(result_id)})
-        context_data['result_image_src'] = reverse_lazy('cached_image',
+        context_data['result_image_src'] = reverse_lazy('cached-image',
                                                         kwargs={'key': _get_result_image_key(result_id)})
         return context_data
 text_overlay_result = TextOverlayResult.as_view()
@@ -114,7 +117,7 @@ class Watermark(FormView):
         _save_source_image(image, result_id)
         _save_result_image(result_image, result_id)
 
-        return HttpResponseRedirect(reverse_lazy('watermark_result', kwargs={'result_id': result_id}))
+        return HttpResponseRedirect(reverse_lazy('watermark-result', kwargs={'result_id': result_id}))
 watermark = Watermark.as_view()
 
 
@@ -124,9 +127,9 @@ class WatermarkResult(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         result_id = kwargs.get('result_id', 'unknown')
-        context_data['source_image_src'] = reverse_lazy('cached_image',
+        context_data['source_image_src'] = reverse_lazy('cached-image',
                                                         kwargs={'key': _get_source_image_key(result_id)})
-        context_data['result_image_src'] = reverse_lazy('cached_image',
+        context_data['result_image_src'] = reverse_lazy('cached-image',
                                                         kwargs={'key': _get_result_image_key(result_id)})
         return context_data
 watermark_result = WatermarkResult.as_view()
@@ -146,7 +149,7 @@ class Steganography(FormView):
         _save_source_image(image, result_id)
         _save_result_image(result_image, result_id)
 
-        return HttpResponseRedirect(reverse_lazy('steganography_result', kwargs={'result_id': result_id}))
+        return HttpResponseRedirect(reverse_lazy('steganography-result', kwargs={'result_id': result_id}))
 steganography = Steganography.as_view()
 
 
@@ -156,9 +159,9 @@ class SteganographyResult(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         result_id = kwargs.get('result_id', 'unknown')
-        context_data['source_image_src'] = reverse_lazy('cached_image',
+        context_data['source_image_src'] = reverse_lazy('cached-image',
                                                         kwargs={'key': _get_source_image_key(result_id)})
-        context_data['result_image_src'] = reverse_lazy('cached_image',
+        context_data['result_image_src'] = reverse_lazy('cached-image',
                                                         kwargs={'key': _get_result_image_key(result_id)})
 
         result_image = _get_image(_get_result_image_key(result_id))
@@ -178,3 +181,15 @@ class CachedImage(View):
         image_fp.seek(0)
         return HttpResponse(image_fp, content_type=content_type)
 cached_image = CachedImage.as_view()
+
+
+class ItemDetail(DetailView):
+    model = Item
+item_detail = ItemDetail.as_view()
+
+
+class ItemCreate(CreateView):
+    model = Item
+    form_class = ItemForm
+item_create = ItemCreate.as_view()
+

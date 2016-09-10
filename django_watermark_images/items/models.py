@@ -1,14 +1,21 @@
+import uuid
+
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from django_extensions.db.models import TitleDescriptionModel, TimeStampedModel
-from imagekit.models import ImageSpecField
 
-from .processors import TextOverlay, Watermark, HiddenWatermark
+
+def image_upload_to(instance, filename):
+    return 'original_image/{uuid}/{filename}'.format(uuid=uuid.uuid4().hex, filename=filename)
 
 
 class Item(TitleDescriptionModel, TimeStampedModel):
-    original_image = models.ImageField(_('original image'))
-    text_overlay_image = ImageSpecField(source='original_image', processors=[TextOverlay()], format='JPEG')
-    watermark_image = ImageSpecField(source='original_image', processors=[Watermark()], format='JPEG')
-    hidden_watermark_image = ImageSpecField(source='original_image', processors=[HiddenWatermark()], format='PNG')
+    image = models.ImageField(_('original image'), upload_to=image_upload_to)
+
+    def get_absolute_url(self):
+        return reverse_lazy('item-detail', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return 'Item(title={title})'.format(title=self.title)

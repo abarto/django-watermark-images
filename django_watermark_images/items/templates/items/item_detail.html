@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load imagekit %}
+{% block items_nb_class %}active{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12"><div class="dwi-page-header">Item</div></div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Title</div>
+        <div class="col-lg-10">{{ object.title }}</div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Description</div>
+        <div class="col-lg-10">{{ object.description }}</div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Created</div>
+        <div class="col-lg-10">{{ object.created }}</div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Modified</div>
+        <div class="col-lg-10">{{ object.modified }}</div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Image</div>
+        <div class="col-lg-10"><img class="img-responsive item-image" src="{{ object.image.url }}"></div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Text Overlay</div>
+        <div class="col-lg-10">{% generateimage 'items:text-overlay' source=object.image -- class="img-responsive item-image" %}</div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Watermark</div>
+        <div class="col-lg-10">{% generateimage 'items:watermark' source=object.image -- class="img-responsive item-image" %}</div>
+    </div>
+    <div class="row item-row">
+        <div class="col-lg-2 item-label">Hidden Watermark</div>
+        <div class="col-lg-10">{% generateimage 'items:hidden-watermark' source=object.image -- class="img-responsive item-image" %}</div>
+    </div>
+</div>
+{% endblock %}
