@@ -192,4 +192,3 @@ class ItemCreate(CreateView):
     model = Item
     form_class = ItemForm
 item_create = ItemCreate.as_view()
-
