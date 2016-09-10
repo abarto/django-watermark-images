@@ -34,7 +34,7 @@ def add_watermark(image, watermark):
         new_size = rgba_image.size * (image_y / watermark_y)
         rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)
 
-    rgba_watermark_mask = rgba_watermark.convert("L").point(lambda x: min(x, 50))
+    rgba_watermark_mask = rgba_watermark.convert("L").point(lambda x: min(x, 25))
     rgba_watermark.putalpha(rgba_watermark_mask)
 
     watermark_x, watermark_y = rgba_watermark.size
