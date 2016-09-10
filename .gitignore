@@ -93,4 +93,6 @@ ENV/
 .idea
 
 # Django project files
+media/
+django_cache/
 db.sqlite3
