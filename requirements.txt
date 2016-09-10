@@ -5,3 +5,4 @@ django-extensions==1.7.3
 numpy==1.11.1
 django-crispy-forms==1.6.0
 python-magic==0.4.12
+gunicorn==19.6.0
