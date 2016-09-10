@@ -54,5 +54,5 @@ class SteganographyForm(forms.Form):
             Submit('submit', 'Submit', css_class='btn-default pull-right')
         )
 
-    text = forms.CharField(label='Text', max_length=100, required=True)
+    text = forms.CharField(label='Text', max_length=500, widget=forms.Textarea, required=True)
     image = forms.ImageField(label='Source Image', required=True)

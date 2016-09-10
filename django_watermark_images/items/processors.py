@@ -1,7 +1,7 @@
 import numpy as np
 
 from io import BytesIO
-from pickle import dump, load
+from pickle import dump, load, UnpicklingError
 
 from django.conf import settings
 from PIL import Image, ImageDraw, ImageFont, ImageMath
@@ -58,15 +58,18 @@ def lsb_encode(data, image):
 
 
 def lsb_decode(image):
-    red, green, blue = image.split()
-    watermark = ImageMath.eval("(a&0x1)*0x01", a=red)
-    watermark = watermark.convert('L')
-    watermark_bytes = bytes(watermark.getdata())
-    watermark_bits_array = np.fromiter(watermark_bytes, dtype=np.uint8)
-    watermark_bytes_array = np.packbits(watermark_bits_array)
-    watermark_bytes = bytes(watermark_bytes_array)
-    bytes_io = BytesIO(watermark_bytes)
-    return load(bytes_io)
+    try:
+        red, green, blue = image.split()
+        watermark = ImageMath.eval("(a&0x1)*0x01", a=red)
+        watermark = watermark.convert('L')
+        watermark_bytes = bytes(watermark.getdata())
+        watermark_bits_array = np.fromiter(watermark_bytes, dtype=np.uint8)
+        watermark_bytes_array = np.packbits(watermark_bits_array)
+        watermark_bytes = bytes(watermark_bytes_array)
+        bytes_io = BytesIO(watermark_bytes)
+        return load(bytes_io)
+    except UnpicklingError:
+        return ''
 
 
 class TextOverlay(object):
