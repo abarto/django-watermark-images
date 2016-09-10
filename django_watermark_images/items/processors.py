@@ -8,7 +8,10 @@ from imagekit import ImageSpec, register
 from PIL import Image, ImageDraw, ImageFont, ImageMath
 
 
-def add_text_overlay(image, font, text):
+_default_font = ImageFont.truetype('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', 24)
+
+
+def add_text_overlay(image, text, font=_default_font):
     rgba_image = image.convert('RGBA')
     text_overlay = Image.new('RGBA', rgba_image.size, (255, 255, 255, 0))
     image_draw = ImageDraw.Draw(text_overlay)
@@ -77,7 +80,7 @@ class TextOverlayProcessor(object):
     font = ImageFont.truetype('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', 36)
 
     def process(self, image):
-        return add_text_overlay(image, self.font, 'django-watermark-images')
+        return add_text_overlay(image, 'django-watermark-images', font=self.font)
 
 
 class WatermarkProcessor(object):

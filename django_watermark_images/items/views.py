@@ -77,8 +77,7 @@ class TextOverlay(FormView):
         text = form.cleaned_data['text']
         image = Image.open(form.cleaned_data['image'])
 
-        font = ImageFont.truetype('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', 24)
-        result_image = add_text_overlay(image, font, text)
+        result_image = add_text_overlay(image, text)
 
         result_id = _create_result_id()
         _save_source_image(image, result_id)
