@@ -70,7 +70,7 @@ def lsb_decode(image):
 
 
 class TextOverlay(object):
-    font = ImageFont.truetype('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', 24)
+    font = ImageFont.truetype('/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', 36)
 
     def process(self, image):
         return add_text_overlay(image, self.font, 'django-watermark-images')

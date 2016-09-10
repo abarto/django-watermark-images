@@ -131,8 +131,6 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-WATERMARK_IMAGE = os.path.join(BASE_DIR, 'assets/img/Coat_of_arms_of_Ireland.png')
-
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 CACHES = {
@@ -141,3 +139,7 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
     }
 }
+
+WATERMARK_IMAGE = os.path.join(BASE_DIR, 'assets/img/Coat_of_arms_of_Ireland.png')
+
+PLACEHOLDER_IMAGE = os.path.join(BASE_DIR, 'assets/img/missing_image.png')
