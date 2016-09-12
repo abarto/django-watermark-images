@@ -25,18 +25,14 @@ def add_text_overlay(image, text, font=_default_font):
 
 def add_watermark(image, watermark):
     rgba_image = image.convert('RGBA')
-    image_x, image_y = rgba_image.size
     rgba_watermark = watermark.convert('RGBA')
 
-    watermark_x, _ = rgba_watermark.size
-    if watermark_x > image_x:
-        new_size = rgba_image.size * (image_x / watermark_x)
-        rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)
+    image_x, image_y = rgba_image.size
+    watermark_x, watermark_y = rgba_watermark.size
 
-    _, watermark_y = rgba_watermark.size
-    if watermark_y > image_y:
-        new_size = rgba_image.size * (image_y / watermark_y)
-        rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)
+    watermark_scale = max(image_x / (2.0 * watermark_x), image_y / (2.0 * watermark_y))
+    new_size = (int(watermark_x * watermark_scale), int(watermark_y * watermark_scale))
+    rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)
 
     rgba_watermark_mask = rgba_watermark.convert("L").point(lambda x: min(x, 25))
     rgba_watermark.putalpha(rgba_watermark_mask)
