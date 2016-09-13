@@ -8,9 +8,9 @@ A `Vagrantfile` spec file is included if you want to try the project by yourself
 
 ## Screenshots
 
-![Text Overlay Screenshot](screenshot-text-overlay.png "Text Overlay Screenshot")
+![Text Overlay Screenshot](screenshot-text-overlay.jpg "Text Overlay Screenshot")
 
-![Watermark Screenshot](screenshot-watermark.png "Watermark Screenshot")
+![Watermark Screenshot](screenshot-watermark.jpg "Watermark Screenshot")
 
 ## Text Overlay
 
@@ -141,12 +141,12 @@ class WatermarkProcessor(object):
 
     def process(self, image):
         return add_watermark(image, self.watermark)
-        
+
 class Watermark(ImageSpec):
     processors = [WatermarkProcessor()]
     format = 'JPEG'
     options = {'quality': 75}
-    
+
 register.generator('items:watermark', Watermark)
 ~~~
 
